@@ -1,3 +1,6 @@
+// INFO:  this file is the main entry point where functions are defined that constitute the API the server
+// presents to the client
+
 // core node module (path)
 import path from "path";
 import express, { Express, NextFunction, Request, Response } from "express";
