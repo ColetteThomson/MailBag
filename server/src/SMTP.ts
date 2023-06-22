@@ -12,7 +12,7 @@ import { IServerInfo } from "./ServerInfo";
 
 // the worker that will perform SMTP operations
 export class Worker {
-  // instatiated server information sent, them stored in ServerInfo
+  // instantiated server information sent, them stored in ServerInfo
   private static serverInfo: IServerInfo;
   // constructor:
   // IServerInfo contains info needed to connect to SMTP server
@@ -34,9 +34,13 @@ export class Worker {
     console.log("SMTP.Worker.sendMessage()", inOptions);
 
     return new Promise((inResolve, inReject) => {
+      // nodemailer.createTransport() is called first and passed server info - gets a connection to SMTP server
       const transport: Mail = nodemailer.createTransport(Worker.serverInfo.smtp);
+      // calls transport.sendMail
       transport.sendMail(
+        // inOptions contains message details passed in from client
         inOptions,
+        // callback function (with a union) that is passed an error object and info about sent message
         (inError: Error | null, inInfo: SentMessageInfo) => {
           if (inError) {
             console.log("SMTP.Worker.sendMessage(): Error", inError);
